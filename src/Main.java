@@ -1,11 +1,11 @@
 class Main {
     public static void main (String[] args) {
         int count = 0;
-        boolean isGreenLight = false;
         int speedOfPlayer1 = 5;
         int speedOfPlayer2 = 0;
         int speedOfPlayer3 = 2;
-        if (isGreenLight) {
+        Logic.answer(speedOfPlayer1);
+        if (Logic.isGreenLight) {
             System.out.println("Все игроки проходят!");
         } else {
             if (speedOfPlayer1 > 0) {
