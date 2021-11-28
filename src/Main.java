@@ -1,101 +1,68 @@
-class Main {
-    public static void main (String[] args) {
-        int count = 0;
-        boolean isGreenLight = false;
-        int speedOfPlayer1 = 5;
-        int speedOfPlayer2 = 0;
-        int speedOfPlayer3 = 2;
-        if (isGreenLight) {
-            System.out.println("Все игроки проходят!");
-        } else {
-            if (speedOfPlayer1 > 0) {
-                count++;
-            }
-            if (speedOfPlayer2 > 0) {
-                count++;
-            }
-            if (speedOfPlayer3 > 0) {
-                count++;
-            }
-            if (count == 0) {
-                System.out.println("Все игроки стоят. Молодцы");
-            } else if (count == 1) {
-                System.out.println("Выбыл " + count + " игрок.");
-            } else {
-                System.out.println("Выбыло " + count + "-е игроков.");
-            }
-        }
-    }
-}
-/*import org.jetbrains.annotations.NotNull;
-
-import java.util.Scanner;
+import java.util.Arrays;
 
 class Main {
     public static void main(String[] args) {
         int count = 0;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Выберите режим программы. 1 или 2");
-        int mode = sc.nextInt();
-        if (mode == 1) {
-            easy(count);
-        } else {
-            advanced(count, sc);
-        }
-        sc.close();
+        boolean isGreenLight = true;
+        int[] speedOfPlayers = {0, 3, 5, 0, 0, 1, 0};
+        int losers = numberOfDropouts(speedOfPlayers, isGreenLight);
+        System.out.println(losers);
+        System.out.println(Arrays.toString(speedOfDropouts(speedOfPlayers, isGreenLight)));
+        System.out.println(Arrays.toString(speedOfWinners(speedOfPlayers, isGreenLight)));
     }
-    public static void easy(int count) {
-        boolean isGreenLight = false;
-        int speedOfPlayer1 = 5;
-        int speedOfPlayer2 = 0;
-        int speedOfPlayer3 = 2;
-        if (isGreenLight) {
-            System.out.println("Все игроки проходят!");
-        } else {
-            if (speedOfPlayer1 > 0) {
-                count++;
-            }
-            if (speedOfPlayer2 > 0) {
-                count++;
-            }
-            if (speedOfPlayer3 > 0) {
-                count++;
-            }
-            if (count == 0) {
-                System.out.println("Все игроки стоят. Молодцы");
-            } else if (count == 1) {
-                System.out.println("Выбыл " + count + " игрок.");
-            } else {
-                System.out.println("Выбыло " + count + "-е игроков.");
-            }
-        }
-    }
-    public static void advanced(int count, Scanner sc) {
-        int[] speedOfPlayer = new int[3];
-        System.out.println("Введите скорость первого игрока");
-        speedOfPlayer[0] = sc.nextInt();
-        System.out.println("Введите скорость второго игрока");
-        speedOfPlayer[1] = sc.nextInt();
-        System.out.println("Введите скорость третьего игрока");
-        speedOfPlayer[2] = sc.nextInt();
-        System.out.println("Горит зелёный свет? Да/Нет:");
-        String light = sc.next();
-        if (light.equals("да") || light.equals("Да") || light.equals("lf") || light.equals("yes")) {
-            System.out.println("Все игроки проходят!");
-        } else if (light.equals("нет") || light.equals("Нет") || light.equals("ytn") || light.equals("no")) {
-            for (int i = 0; i < 3; i++) {
-                if (speedOfPlayer[i] > 0) {
-                    count++;
+
+    public static int numberOfDropouts(int[] players, boolean isGreen) {
+        int dropout = 0;
+        if (!isGreen) {
+            for (int player : players) {
+                if (player > 0 || player < 0) {
+                    dropout++;
                 }
             }
-            if (count == 0) {
-                System.out.println("Все игроки стоят. Молодцы");
-            } else if (count == 1) {
-                System.out.println("Выбыл " + count + " игрок.");
-            } else {
-                System.out.println("Выбыло " + count + "-е игроков.");
+        } else {
+            dropout = 0;
+        }
+        return dropout;
+    }
+
+    public static int[] speedOfDropouts(int[] players, boolean isGreen) {
+        int n = numberOfDropouts(players, isGreen);
+        int[] speedOfLosers = new int[n];
+        int i = 0;
+        if (!isGreen) {
+            for (int player : players) {
+                if (player > 0 || player < 0) {
+                    speedOfLosers[i] = player;
+                    if (i > n) {
+                        break;
+                    }
+                    i++;
+                }
+            }
+        } else System.out.println("Выбывших нет");
+        return speedOfLosers;
+    }
+
+    public static int[] speedOfWinners(int[] players, boolean isGreen) {
+        int n = players.length - numberOfDropouts(players, isGreen);
+        int[] speedOfZero = new int[n];
+        int i = 0;
+        if (!isGreen) {
+            for (int player : players) {
+                if (player == 0) {
+                    speedOfZero[i] = player;
+                    if (i > n) {
+                        break;
+                    }
+                    i++;
+                }
+            }
+        } else {
+            for (int j = 0; j < players.length; j++) {
+                speedOfZero[j] = players[j];
             }
         }
+        return speedOfZero;
     }
+
 }
-*/
